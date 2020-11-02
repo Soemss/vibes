@@ -10,4 +10,4 @@ client.on('ready', () => {
     console.log('Music go brrr')
 })
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN)
