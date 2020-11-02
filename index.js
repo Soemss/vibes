@@ -8,10 +8,6 @@ require('dotenv').config()
 
 client.on('ready', () => {
     console.log('Music go brrr')
-
-    command(client, 'ping', message => {
-        message.channel.send('Pong!')
-    })
 })
 
 client.login(process.env.TOKEN);
