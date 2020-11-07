@@ -7,13 +7,15 @@ client.on('ready', () => {
      
 })
 
-client.on("message", async(message) => {
+client.on("message", message => {
     const prefix = '<';
 
     const serverQueue = queue.get(message.guild.id);
 
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    const command = args.toLowerCase();
 
     if(command === 'play') {
         execute(message, serverQueue);
