@@ -95,7 +95,6 @@ client.on("message", message => {
             queue.delete(guild.id);
             return;
         }
-
         const dispatcher = serverQueue.connection
             .play(ytdl(song.url))
             .on('finish', () => {
@@ -103,7 +102,6 @@ client.on("message", message => {
                 play(guild, serverQueue.songs[0]);
             })
             serverQueue.textChannel.send(`🎵 **Now playing**: \`${serverQueue.songs[0].title}\` ${serverQueue.songs[0].url}`)
-        
     }
     
     function stop (message, serverQueue) {
@@ -121,6 +119,7 @@ client.on("message", message => {
             return message.channel.send("There is nothing to skip");
         serverQueue.connection.dispatcher.end();
     }
+
 })
 
 // gets token from heroku
