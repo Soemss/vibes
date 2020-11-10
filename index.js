@@ -43,6 +43,12 @@ client.on("message", message => {
         case 'info':
             stop(message, serverQueue);
             break;
+        case 'pause':
+            pause(message, serverQueue);
+            break;
+        case 'resume':
+            resume(message, serverQueue);
+            break;
     }
     
 
@@ -131,6 +137,22 @@ client.on("message", message => {
             Developed by **Soems** :)
             `
             );
+    }
+
+    function pause (message, serverQueue) {
+        if (serverQueue && serverQueue.playing) {
+            serverQueue.playing = false;
+            serverQueue.connection.dispatcher.pause();
+            return message.channel.send("⏸ **Music Paused**");
+        }
+    }
+
+    function resume (message, serverQueue) {
+        if (serverQueue && !serverQueue.playing) {
+            serverQueue.playing = true;
+            serverQueue.connection.dispatcher.resume();
+            return message.channel.send('▶ **Music Resumed**');
+        }
     }
 })
 
