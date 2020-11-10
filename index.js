@@ -30,8 +30,9 @@ client.on("message", message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
+
     switch(command) {
-        case 'play':
+        case 'play' || 'p':
             execute(message, serverQueue);
             break;
         case 'stop':
