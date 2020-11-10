@@ -43,14 +43,14 @@ client.on("message", message => {
         case 'skip':
             skip(message, serverQueue);
             break;
-        case 'info':
-            info(message, serverQueue);
-            break;
         case 'pause':
             pause(message, serverQueue);
             break;
         case 'resume':
             resume(message, serverQueue);
+            break;
+        case 'help': 
+            help(message);
             break;
     }
     
@@ -136,14 +136,6 @@ client.on("message", message => {
         serverQueue.connection.dispatcher.end();
     }
 
-    function info (message, serverQueue) {
-        serverQueue.channel.send(
-            `**Vibes Music Bot**
-            Developed by **Soems** :)
-            `
-            );
-    }
-
     function pause (message, serverQueue) {
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
@@ -158,6 +150,10 @@ client.on("message", message => {
             serverQueue.connection.dispatcher.resume();
             return message.channel.send('▶ **Music Resumed**');
         }
+    }
+
+    function help (message) {
+        message.channel.send(`**Commands(<):**\n<play: Plays a song\n<stop: Stops the music\n<pause: Pauses the song\n<resume: Resumes the song\n<skip: Skips the song`)
     }
 })
 
