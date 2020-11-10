@@ -43,6 +43,7 @@ client.on("message", message => {
             stop(message, serverQueue);
             break;
         case 'skip':
+        case 'sk':
             skip(message, serverQueue);
             break;
         case 'info':
@@ -57,8 +58,9 @@ client.on("message", message => {
         case 'help': 
             help(message);
             break;
-        case 'queue':
-            queue(message, serverQueue);
+        case 'squeue':
+        case 'sq':
+            squeue(message, serverQueue);
             break;
     }
     
@@ -160,11 +162,11 @@ client.on("message", message => {
         }
     }
 
-    function queue (message, serverQueue) {
-        if (!serverQueue) return send("There is nothing playing in the server.", message.channel);
+    function squeue (message, serverQueue) {
+        if (!serverQueue) return message.channel.send("There is nothing playing in the server.", message.channel);
         
         let q = new Discord.MessageEmbed()
-            .setAuthor("**Music Queue**")
+            .setAuthor("Music Queue")
             .addField("Currently Playing", serverQueue.songs[0].title, true)
             .setDescription(serverQueue.songs.map((song) => {
                 if(song === serverQueue.songs[0]) return;
