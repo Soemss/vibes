@@ -40,6 +40,9 @@ client.on("message", message => {
         case 'skip':
             skip(message, serverQueue);
             break;
+        case 'info':
+            stop(message, serverQueue);
+            break;
     }
     
 
@@ -50,7 +53,7 @@ client.on("message", message => {
             return message.channel.send("You are not in a voice chat.");
         
         } else {
-            // searches request through ytdl & yt api
+            // searches request through ytdl & yt api 
             let result = await searcher.search(args.join(" "), { type: "video" })
             const songInfo = await ytdl.getInfo(result.first.url);
 
@@ -68,7 +71,8 @@ client.on("message", message => {
                     connection: null,
                     songs: [],
                     volume: 5,
-                    playing: true
+                    playing: true,
+                    loop: false,
                 };
                 queue.set(message.guild.id, qConstructor);
                 qConstructor.songs.push(song);
@@ -102,6 +106,7 @@ client.on("message", message => {
                 play(guild, serverQueue.songs[0]);
             })
             serverQueue.textChannel.send(`🎵 **Now playing**: \`${serverQueue.songs[0].title}\` ${serverQueue.songs[0].url}`)
+        
     }
     
     function stop (message, serverQueue) {
@@ -120,6 +125,13 @@ client.on("message", message => {
         serverQueue.connection.dispatcher.end();
     }
 
+    function info (message, serverQueue) {
+        serverQueue.textChannel.send(
+            `**Vibes Music Bot**
+            Developed by **Soems** :)
+            `
+            );
+    }
 })
 
 // gets token from heroku
