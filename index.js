@@ -85,7 +85,7 @@ client.on("message", message => {
                 qConstructor.songs.push(song);
 
                 try{
-                    let connection = await vc.join();
+                    let connection = await voiceChannel.join();
                     qConstructor.connection = connection;
                     play(message.guild, qConstructor.songs[0]);
                 } catch (err) {
@@ -112,6 +112,7 @@ client.on("message", message => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
             })
+            .on("error", error => console.error(error));
             serverQueue.textChannel.send(`🎵 **Now playing**: \`${serverQueue.songs[0].title}\` ${serverQueue.songs[0].url}`)
         
     }
