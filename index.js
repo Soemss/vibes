@@ -33,22 +33,18 @@ client.on("message", message => {
 
     switch(command) {
         case 'play':
-            execute(message, serverQueue);
-            break;
-        case 'p':
+        case 'p':    
             execute(message, serverQueue);
             break;
         case 'stop':
-            stop(message, serverQueue);
-            break;
-        case 's':
+        case 's':    
             stop(message, serverQueue);
             break;
         case 'skip':
             skip(message, serverQueue);
             break;
         case 'info':
-            stop(message, serverQueue);
+            info(message, serverQueue);
             break;
         case 'pause':
             pause(message, serverQueue);
