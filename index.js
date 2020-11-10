@@ -1,5 +1,6 @@
 const { executionAsyncResource } = require('async_hooks');
 const Discord = require('discord.js');
+const { send } = require('process');
 const client = new Discord.Client();
 const queue = new Map();
 const ytdl = require('ytdl-core');
@@ -33,30 +34,20 @@ client.on("message", message => {
 
     switch(command) {
         case 'play':
-<<<<<<< HEAD
         case 'p':    
             execute(message, serverQueue);
             break;
         case 'stop':
-        case 's':    
-=======
-        case 'p':
-            execute(message, serverQueue);
-            break;
+        case 's': 
         case 'stop':
-        case 's':
->>>>>>> 50ead7995b57fdd7358ab9b7978e80219992b559
             stop(message, serverQueue);
             break;
         case 'skip':
             skip(message, serverQueue);
             break;
-<<<<<<< HEAD
         case 'info':
             info(message, serverQueue);
             break;
-=======
->>>>>>> 50ead7995b57fdd7358ab9b7978e80219992b559
         case 'pause':
             pause(message, serverQueue);
             break;
@@ -166,9 +157,24 @@ client.on("message", message => {
         }
     }
 
-    function help (message) {
-        message.channel.send(`**Commands(<):**\n<play: Plays a song\n<stop: Stops the music\n<pause: Pauses the song\n<resume: Resumes the song\n<skip: Skips the song`)
+    function queue (message, serverQueue) {
+        if (!serverQueue) return send("There is nothing playing in the server.", message.channel);
+        
+        let q = new Discord.MessageEmbed()
+            .setAuthor("**Music Queue**")
+            .addField("Currently Playing", serverQueue.songs[0].title, true)
+            .setDescription(serverQueue.songs.map((song) => {
+                if(song === serverQueue.songs[0]) return;
+                return ` **-** ${song.title}`
+            }).join("\n"))
+            if(serverQueue.songs.length === 1)q.setDescription(`There are currently no songs in the queue`)
+            message.channel.send(q)
     }
+
+    function help (message) {
+        message.channel.send(`**Commands(<):**\n**<play** - Plays a song\n**<stop** - Stops the music\n**<pause** - Pauses the song\n**<resume** - Resumes the song\n**<skip** - Skips the song`)
+    }
+
 })
 
 // gets token from heroku
