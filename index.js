@@ -27,7 +27,7 @@ client.on("message", message => {
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     // slices the message, trims, then splits it for yt api
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
     switch(command) {
@@ -80,6 +80,7 @@ client.on("message", message => {
                     playing: true,
                     loop: false,
                 };
+
                 queue.set(message.guild.id, qConstructor);
                 qConstructor.songs.push(song);
 
@@ -112,9 +113,6 @@ client.on("message", message => {
                 play(guild, serverQueue.songs[0]);
             })
             serverQueue.textChannel.send(`🎵 **Now playing**: \`${serverQueue.songs[0].title}\` ${serverQueue.songs[0].url}`)
-        if(song = null) {
-            serverQueue.textChannel.send("**There is no song requested**");
-        }
         
     }
     
