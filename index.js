@@ -111,7 +111,9 @@ client.on("message", message => {
                 serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
             })
+            .on('error', error => console.error(error));
             serverQueue.textChannel.send(`🎵 **Now playing**: \`${serverQueue.songs[0].title}\` ${serverQueue.songs[0].url}`)
+        
         
     }
     
