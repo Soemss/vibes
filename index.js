@@ -14,7 +14,12 @@ const searcher = new YTSearcher({
 // on bot deployment logs string
 client.on('ready', () => {
     console.log('Music go brrr');
-    client.user.setPresence({ game: { name: 'Type "<help" for a list of commands' }, status: 'online' })
+    client.user.setPresence({
+        activity: {
+             name: 'music. "<help"' ,
+             type: 2
+        },
+    })
 })
 
 
@@ -56,6 +61,7 @@ client.on("message", message => {
             resume(message, serverQueue);
             break;
         case 'help': 
+        case 'h': 
             help(message);
             break;
         case 'squeue':
@@ -177,7 +183,9 @@ client.on("message", message => {
     }
 
     function help (message) {
-        message.channel.send(`**Commands(<):**\n**<play** - Plays a song\n**<stop** - Stops the music\n**<pause** - Pauses the song\n**<resume** - Resumes the song\n**<skip** - Skips the song`)
+        message.channel.send(
+            `**Commands (<):**\n**<play (<p)** - Plays a song\n**<stop (<s)** - Stops the music\n**<pause** - Pauses the song\n**<resume** - Resumes the song\n**<skip (<sk)** - Skips the song\n**<squeue (<sq)** - Shows the song queue
+            `)
     }
 
 })
