@@ -137,7 +137,7 @@ client.on("message", message => {
     }
 
     function info (message, serverQueue) {
-        return serverQueue.textChannel.send(
+        serverQueue.textChannel.send(
             `**Vibes Music Bot**
             Developed by **Soems** :)
             `
