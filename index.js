@@ -85,7 +85,7 @@ client.on("message", message => {
                 qConstructor.songs.push(song);
 
                 try{
-                    let connection = await voiceChannel.join();
+                    let connection = await vc.join();
                     qConstructor.connection = connection;
                     play(message.guild, qConstructor.songs[0]);
                 } catch (err) {
