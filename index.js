@@ -13,7 +13,7 @@ const searcher = new YTSearcher({
 // on bot deployment logs string
 client.on('ready', () => {
     console.log('Music go brrr');
-    client.user.setPresence("Type \"<help\" for a list of commands");
+    client.user.setPresence({ game: { name: 'Type "<help" for a list of commands' }, status: 'online' })
 })
 
 
