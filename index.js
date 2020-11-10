@@ -32,7 +32,7 @@ client.on("message", message => {
 
 
     switch(command) {
-        case 'play' || 'p':
+        case 'playa':
             execute(message, serverQueue);
             break;
         case 'stop':
