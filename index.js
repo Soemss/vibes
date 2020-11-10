@@ -57,6 +57,9 @@ client.on("message", message => {
         case 'help': 
             help(message);
             break;
+        case 'queue':
+            queue(message, serverQueue);
+            break;
     }
     
 
