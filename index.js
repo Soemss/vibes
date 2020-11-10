@@ -33,14 +33,10 @@ client.on("message", message => {
 
     switch(command) {
         case 'play':
-            execute(message, serverQueue);
-            break;
         case 'p':
             execute(message, serverQueue);
             break;
         case 'stop':
-            stop(message, serverQueue);
-            break;
         case 's':
             stop(message, serverQueue);
             break;
@@ -48,7 +44,7 @@ client.on("message", message => {
             skip(message, serverQueue);
             break;
         case 'info':
-            stop(message, serverQueue);
+            info(message, serverQueue);
             break;
         case 'pause':
             pause(message, serverQueue);
