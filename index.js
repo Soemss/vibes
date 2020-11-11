@@ -44,15 +44,11 @@ client.on("message", message => {
             break;
         case 'stop':
         case 's': 
-        case 'stop':
             stop(message, serverQueue);
             break;
         case 'skip':
         case 'sk':
             skip(message, serverQueue);
-            break;
-        case 'info':
-            info(message, serverQueue);
             break;
         case 'pause':
             pause(message, serverQueue);
