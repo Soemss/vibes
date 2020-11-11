@@ -96,7 +96,6 @@ client.on("message", message => {
                     volume: 5,
                     playing: true,
                     loop: false,
-                    loopQueue: false,
                 };
 
                 queue.set(message.guild.id, qConstructor);
@@ -179,6 +178,14 @@ client.on("message", message => {
         if (!message.qConstructor.playing) {
             return message.say("There is nothing to loop ._.")
         } 
+        if (message.guild.qConstructor.loop) {
+            message.guild.qConstructor.loop = false;
+            message.channel.send("**🔁 Loop disabled**");
+
+        } else {
+            message.guild.qConstructor.loop = true;
+            message.channel.send("**🔁 Loop enabled**");
+        }
     }
 
     function squeue (message, serverQueue) {
