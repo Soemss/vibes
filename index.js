@@ -58,15 +58,17 @@ client.on("message", message => {
             break;
         case 'help': 
         case 'h': 
-            help(message);
+            help(message, serverQueue);
             break;
         case 'squeue':
         case 'sq':
             squeue(message, serverQueue);
             break;
+        case 'loop':
+        case 'l':
+            loop(message, serverQueue);
     }
     
-
     // function for checking if user is in vc, then returns a string if not.
     async function execute(message, serverQueue) {
         let vc = message.member.voice.channel;
@@ -94,6 +96,7 @@ client.on("message", message => {
                     volume: 5,
                     playing: true,
                     loop: false,
+                    loopQueue: false,
                 };
 
                 queue.set(message.guild.id, qConstructor);
@@ -106,7 +109,7 @@ client.on("message", message => {
                 } catch (err) {
                     console.error(err);
                     queue.delete(message.guild.id);
-                    return message.channel.send(`Unable to join the voice channel ${err}`);
+                    return message.channel.send(`Unable to join the voice channel ;-; ${err}`);
                 }
             } else {
                 serverQueue.songs.push(song);
@@ -162,6 +165,20 @@ client.on("message", message => {
             serverQueue.connection.dispatcher.resume();
             return message.channel.send('▶ **Music Resumed**');
         }
+
+        if (message.guild.qConstructor.loop) {
+            message.guild.qConstructor.loop = false;
+            message.channel.send(`**🔁 Loop disabled**`);
+        } else {
+            message.guild.qConstructor.loop = true;
+            message.channel.send(`**🔁 Loop enabled**`);
+        }
+    }
+
+    function loop (message, serverQueue) {
+        if (!message.qConstructor.playing) {
+            return message.say("There is nothing to loop ._.")
+        } 
     }
 
     function squeue (message, serverQueue) {
@@ -183,6 +200,7 @@ client.on("message", message => {
             `**Commands (<):**\n**<play (<p)** - Plays a song\n**<stop (<s)** - Stops the music\n**<pause** - Pauses the song\n**<resume** - Resumes the song\n**<skip (<sk)** - Skips the song\n**<squeue (<sq)** - Shows the song queue
             `)
     }
+
 
 })
 
