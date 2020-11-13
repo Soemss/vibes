@@ -67,6 +67,7 @@ client.on("message", message => {
         case 'loop':
         case 'l':
             loop(message, serverQueue);
+            break;
     }
     
     // function for checking if user is in vc, then returns a string if not.
@@ -149,7 +150,19 @@ client.on("message", message => {
             return message.channel.send("There is nothing to skip");
         serverQueue.connection.dispatcher.end();
     }
+    function loop (message, serverQueue) {
+        if (!serverQueue) {
+            return message.channel.send("**There is nothing to loop ._.**")
+        }
 
+        if (serverQueue.loop === true) serverQueue.songs.push(serverQueue.songs.shift());
+        else serverQueue.songs.shift();
+        play(guild, serverQueue.songs[0]);
+        // queue.loop = !queue.loop;
+        // return message.channel
+        //     .send(`🔁 **Looping** ${queue.loop ? "**enabled**" : "**disabled**"}`)
+        //     .catch(console.error)
+    }
     function pause (message, serverQueue) {
         if (serverQueue && serverQueue.playing) {
             serverQueue.playing = false;
@@ -174,19 +187,7 @@ client.on("message", message => {
         }
     }
 
-    function loop (message, serverQueue) {
-        if (!message.qConstructor.playing) {
-            return message.say("There is nothing to loop ._.")
-        } 
-        if (message.guild.qConstructor.loop) {
-            message.guild.qConstructor.loop = false;
-            message.channel.send("**🔁 Loop disabled**");
-
-        } else {
-            message.guild.qConstructor.loop = true;
-            message.channel.send("**🔁 Loop enabled**");
-        }
-    }
+    
 
     function squeue (message, serverQueue) {
         if (!serverQueue) return message.channel.send("There is nothing playing in the server.", message.channel);
