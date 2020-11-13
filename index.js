@@ -127,7 +127,7 @@ client.on("message", message => {
         const dispatcher = serverQueue.connection
             .play(ytdl(song.url))
             .on('finish', () => {
-                serverQueue.songs.shift();
+                if (!serverQueue.loop) serverQueue.songs.shift();
                 play(guild, serverQueue.songs[0]);
             })
             .on("error", error => console.error(error));
@@ -151,17 +151,12 @@ client.on("message", message => {
         serverQueue.connection.dispatcher.end();
     }
     function loop (message, serverQueue) {
-        if (!serverQueue) {
-            return message.channel.send("**There is nothing to loop ._.**")
-        }
+        if (!message.member.voice.channel) return message.channel.send("**There is nothing to loop ._.**")
+        if (!serverQueue) return message.channel.send("**There is nothing playing ._.**")
 
-        if (serverQueue.loop === true) serverQueue.songs.push(serverQueue.songs.shift());
-        else serverQueue.songs.shift();
-        play(guild, serverQueue.songs[0]);
-        // queue.loop = !queue.loop;
-        // return message.channel
-        //     .send(`🔁 **Looping** ${queue.loop ? "**enabled**" : "**disabled**"}`)
-        //     .catch(console.error)
+        serverQueue.loop = !serverQueue.loop
+        
+        return message.channel.send(`🔁 ${ serverQueue.loop ? `**Looped**` : `**Unlooped**`}`)
     }
     function pause (message, serverQueue) {
         if (serverQueue && serverQueue.playing) {
